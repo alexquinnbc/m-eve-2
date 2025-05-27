@@ -1,1 +1,184 @@
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cellular Legacy: Journey from Mitochondrial Eve</title>
+    <style>
+        :root {
+            --deep-blue: #0a1931;
+            --cell-gold: #ffd700;
+            --dna-teal: #00b4d8;
+            --mutation-purple: #9d4edd;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', sans-serif;
+            background: var(--deep-blue);
+            color: white;
+            overflow-x: hidden;
+        }
+
+        /* Hero Section */
+        #hero {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(rgba(10, 25, 49, 0.9), rgba(10, 25, 49, 0.7)),
+                        url('https://images.unsplash.com/photo-1581591524425-c7e0978865fc?ixlib=rb-1.2.1&auto=format&fit=crop&w=1950&q=80');
+            background-size: cover;
+            padding: 20px;
+        }
+
+        .choice-btn {
+            padding: 15px 30px;
+            margin: 10px;
+            border: 2px solid var(--cell-gold);
+            background: transparent;
+            color: white;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .choice-btn:hover {
+            background: var(--cell-gold);
+            color: var(--deep-blue);
+        }
+
+        /* Interactive Sections */
+        .section {
+            display: none;
+            padding: 50px 20px;
+            min-height: 100vh;
+        }
+
+        #dna-simulation {
+            background: linear-gradient(to right bottom, #000428, #004e92);
+        }
+
+        .mutation-node {
+            width: 20px;
+            height: 20px;
+            background: var(--mutation-purple);
+            border-radius: 50%;
+            position: absolute;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .mutation-node:hover {
+            transform: scale(1.5);
+        }
+
+        #timeline {
+            height: 5px;
+            background: white;
+            margin: 50px 0;
+            position: relative;
+        }
+
+        .era-marker {
+            position: absolute;
+            top: -20px;
+            width: 2px;
+            height: 40px;
+            background: var(--cell-gold);
+        }
+
+        /* Mobile Optimization */
+        @media (max-width: 768px) {
+            .choice-btn {
+                width: 100%;
+                margin: 10px 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Entry Portal -->
+    <section id="hero">
+        <h1>You Contain Multitudes</h1>
+        <p>Your cells hold a 150,000-year-old story. How will you explore it?</p>
+        <button class="choice-btn" onclick="startJourney('lineage')">Follow Your Cellular Ancestry</button>
+        <button class="choice-btn" onclick="startJourney('health')">Optimize Your Mitochondrial Health</button>
+        <button class="choice-btn" onclick="startJourney('unity')">Discover Our Shared DNA</button>
+    </section>
+
+    <!-- Lineage Explorer -->
+    <section id="lineage-section" class="section">
+        <div id="timeline"></div>
+        <div id="mutation-map"></div>
+        <button onclick="showSection('hero')">Return to Beginning</button>
+    </section>
+
+    <!-- Mitochondrial Health Simulator -->
+    <section id="health-section" class="section">
+        <h2>Power Your Cellular Engines</h2>
+        <div class="simulation-panel">
+            <label>Exercise Level: <input type="range" id="exercise" min="0" max="100" value="50"></label>
+            <label>Nutrition Quality: <input type="range" id="nutrition" min="0" max="100" value="50"></label>
+            <div id="energy-output">Current Energy Production: ▰▰▰▰▰</div>
+        </div>
+    </section>
+
+    <!-- Unity Experience -->
+    <section id="unity-section" class="section">
+        <div id="world-map"></div>
+        <div id="dna-matches"></div>
+    </section>
+
+    <script>
+        // Initialize experience
+        let userPath = [];
+        const mutations = [
+            {year: -150000, event: "Mitochondrial Eve"},
+            {year: -100000, event: "Migration from Africa"},
+            {year: -50000, event: "Ice Age Adaptation"},
+            {year: 0, event: "You"}
+        ];
+
+        function startJourney(path) {
+            userPath.push(path);
+            document.getElementById('hero').style.display = 'none';
+            document.getElementById(`${path}-section`).style.display = 'block';
+            initializePath(path);
+        }
+
+        function initializePath(path) {
+            if(path === 'lineage') {
+                const timeline = document.getElementById('timeline');
+                mutations.forEach((mutation, index) => {
+                    const marker = document.createElement('div');
+                    marker.className = 'era-marker';
+                    marker.style.left = `${(index * 25)}%`;
+                    marker.title = mutation.event;
+                    timeline.appendChild(marker);
+                });
+            }
+        }
+
+        // Health Simulation
+        document.getElementById('exercise').addEventListener('input', updateEnergy);
+        document.getElementById('nutrition').addEventListener('input', updateEnergy);
+
+        function updateEnergy() {
+            const exercise = document.getElementById('exercise').value;
+            const nutrition = document.getElementById('nutrition').value;
+            const energy = Math.sqrt((exercise * nutrition)/50);
+            const energyBars = '▰'.repeat(Math.floor(energy/20));
+            document.getElementById('energy-output').textContent = 
+                `Current Energy Production: ${energyBars}`;
+        }
+
+        // Navigation
+        function showSection(sectionId) {
+            document.querySelectorAll('.section').forEach(s => s.style.display = 'none');
+            document.getElementById(sectionId).style.display = 'flex';
+        }
+    </script>
+</body>
+</html>
